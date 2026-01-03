@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 תכנות מחדש של המוח</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Heebo', sans-serif;
+        }
+        
+        body {
+            background: #FFF5F7;
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+            padding-bottom: 200px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            color: #D4A574;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #888;
+            font-size: 1.1em;
+        }
+        
+        .brain-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .brain-icon {
+            font-size: 80px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+        
+        .power-button {
+            background: #fff;
+            border: 2px solid #FFD4E5;
+            border-radius: 20px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .power-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(212, 165, 116, 0.2);
+        }
+        
+        .power-button:active {
+            transform: scale(0.98);
+        }
+        
+        .power-button.memory { border-color: #FFB6C1; }
+        .power-button.memory:hover { background: #FFF0F3; }
+        
+        .power-button.emotion { border-color: #B8E6D4; }
+        .power-button.emotion:hover { background: #F0FFF8; }
+        
+        .power-button.esteem { border-color: #D4A574; }
+        .power-button.esteem:hover { background: #FFFAF5; }
+        
+        .power-button.confidence { border-color: #FFB6C1; }
+        .power-button.confidence:hover { background: #FFF0F3; }
+        
+        .power-button.image { border-color: #B8E6D4; }
+        .power-button.image:hover { background: #F0FFF8; }
+        
+        .power-button.empower { border-color: #D4A574; }
+        .power-button.empower:hover { background: #FFFAF5; }
+        
+        .power-button.relationship { border-color: #FFB6C1; }
+        .power-button.relationship:hover { background: #FFF0F3; }
+        
+        .power-button.divine { border-color: #D4A574; }
+        .power-button.divine:hover { background: #FFFAF5; }
+        
+        .button-icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .button-title {
+            font-size: 1em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .button-desc {
+            font-size: 0.8em;
+            color: #888;
+        }
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #FFF5F7;
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        .overlay.active {
+            display: flex;
+        }
+        
+        .overlay-content {
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .close-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #FFB6C1;
+            border: none;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .animation-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+        }
+        
+        .animation-text {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            min-height: 60px;
+            color: #333;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #FFE4EC;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-fill.memory { background: #FFB6C1; }
+        .progress-fill.emotion { background: #B8E6D4; }
+        .progress-fill.esteem { background: #D4A574; }
+        .progress-fill.confidence { background: #FFB6C1; }
+        .progress-fill.image { background: #B8E6D4; }
+        .progress-fill.empower { background: #D4A574; }
+        .progress-fill.relationship { background: #FFB6C1; }
+        .progress-fill.divine { background: #D4A574; }
+        
+        .completion-message {
+            display: none;
+            padding: 20px;
+            background: #fff;
+            border: 2px solid #B8E6D4;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .completion-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .stats-section {
+            max-width: 500px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid #FFD4E5;
+        }
+        
+        .stats-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            color: #D4A574;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #FFE4EC;
+        }
+        
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            color: #666;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            font-size: 1.2em;
+            color: #D4A574;
+        }
+        
+        .daily-section {
+            max-width: 500px;
+            margin: 30px auto;
+            background: #fff;
+            border: 2px solid #B8E6D4;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .daily-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #D4A574;
+        }
+        
+        .daily-affirmation {
+            font-size: 1.3em;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .read-aloud-btn {
+            background: #FFB6C1;
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .read-aloud-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.4);
+        }
+        
+        .journal-section {
+            max-width: 500px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid #D4A574;
+        }
+        
+        .journal-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            color: #D4A574;
+        }
+        
+        .journal-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #FFE4EC;
+            border-radius: 15px;
+            background: #fff;
+            color: #333;
+            font-size: 1em;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        
+        .journal-textarea:focus {
+            outline: none;
+            border-color: #FFB6C1;
+        }
+        
+        .save-btn {
+            width: 100%;
+            background: #B8E6D4;
+            border: none;
+            color: #333;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(184, 230, 212, 0.4);
+        }
+        
+        .entries-list {
+            margin-top: 20px;
+        }
+        
+        .entry-item {
+            background: #FFF5F7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #FFE4EC;
+        }
+        
+        .entry-date {
+            font-size: 0.8em;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        
+        .entry-content {
+            white-space: pre-wrap;
+            color: #333;
+        }
+        
+        .install-btn {
+            background: #B8E6D4;
+            border: none;
+            color: #333;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .install-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(184, 230, 212, 0.5);
+        }
+        
+        .install-btn:disabled {
+            background: #ddd;
+            cursor: not-allowed;
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧠 תכנות מחדש של המוח</h1>
+        <p>לחצי על כפתור כדי להתחיל את התהליך</p>
+    </div>
+    
+    <div class="brain-container">
+        <span class="brain-icon">🧠</span>
+    </div>
+    
+    <div class="buttons-grid">
+        <div class="power-button memory" onclick="startProcess('memory')">
+            <span class="button-icon">🗑️</span>
+            <div class="button-title">מחיקת זכרונות</div>
+            <div class="button-desc">שחרור זכרונות כואבים</div>
+        </div>
+        
+        <div class="power-button emotion" onclick="startProcess('emotion')">
+            <span class="button-icon">💔</span>
+            <div class="button-title">מחיקת רגשות</div>
+            <div class="button-desc">שחרור רגשות ישנים</div>
+        </div>
+        
+        <div class="power-button esteem" onclick="startProcess('esteem')">
+            <span class="button-icon">⭐</span>
+            <div class="button-title">הערכה עצמית</div>
+            <div class="button-desc">התקנת תוכנה חדשה</div>
+        </div>
+        
+        <div class="power-button confidence" onclick="startProcess('confidence')">
+            <span class="button-icon">💪</span>
+            <div class="button-title">ביטחון עצמי</div>
+            <div class="button-desc">הפעלת מנוע פנימי</div>
+        </div>
+        
+        <div class="power-button image" onclick="startProcess('image')">
+            <span class="button-icon">👑</span>
+            <div class="button-title">דימוי עצמי גבוה</div>
+            <div class="button-desc">שדרוג התדמית הפנימית</div>
+        </div>
+        
+        <div class="power-button empower" onclick="startProcess('empower')">
+            <span class="button-icon">✨</span>
+            <div class="button-title">העצמה עצמית</div>
+            <div class="button-desc">משפטי כוח ועוצמה</div>
+        </div>
+        
+        <div class="power-button relationship" onclick="startProcess('relationship')">
+            <span class="button-icon">💕</span>
+            <div class="button-title">מגנוט זוגיות טובה</div>
+            <div class="button-desc">משיכת אהבה אמיתית</div>
+        </div>
+        
+        <div class="power-button divine" onclick="startProcess('divine')">
+            <span class="button-icon">👸</span>
+            <div class="button-title">אשה אלוקית</div>
+            <div class="button-desc">יפה וממגנטת גברים איכותיים</div>
+        </div>
+    </div>
+    
+    <!-- Reset Button -->
+    <div style="max-width: 500px; margin: 30px auto; text-align: center;">
+        <button onclick="resetAll()" style="background: #FFE4EC; border: 2px solid #FFB6C1; color: #666; padding: 12px 30px; border-radius: 25px; font-size: 1em; cursor: pointer;">🔄 איפוס הכל</button>
+    </div>
+    
+    <div class="daily-section">
+        <div class="daily-title">💫 האמירה היומית שלי</div>
+        <div class="daily-affirmation" id="dailyAffirmation">"את מלכה."</div>
+        <button class="read-aloud-btn" onclick="cycleAffirmation()">🔄 אמירה נוספת</button>
+    </div>
+    
+    <div class="journal-section">
+        <div class="journal-title">📝 היומן שלי - הוכחות לעוצמה שלי</div>
+        <textarea class="journal-textarea" id="journalEntry" placeholder="כתבי כאן דוגמה לאיך התמודדת עם משהו קשה לבד..."></textarea>
+        <button class="save-btn" onclick="saveJournalEntry()">💾 שמור הוכחה לעוצמה</button>
+        <div class="entries-list" id="entriesList"></div>
+    </div>
+    
+    <div class="overlay" id="memoryOverlay">
+        <button class="close-overlay" onclick="closeOverlay('memory')">✕</button>
+        <div class="overlay-content">
+            <div class="animation-icon" id="memoryIcon">🗑️</div>
+            <div class="animation-text" id="memoryText">מוכנה למחוק זיכרון?</div>
+            <div class="progress-bar">
+                <div class="progress-fill memory" id="memoryProgress"></div>
+            </div>
+            <textarea class="journal-textarea" id="memoryInput" placeholder="כתבי את הזיכרון שאת רוצה למחוק..." style="margin-bottom: 20px;"></textarea>
+            <button class="install-btn" id="memoryBtn" onclick="runMemoryProcess()">🗑️ מחק זיכרון</button>
+            <div class="completion-message" id="memoryComplete">
+                <p style="font-size: 1.3em; margin-bottom: 10px; color: #D4A574;">✅ כל הכבוד!</p>
+                <p style="color: #666;">הזיכרון נמחק בהצלחה!</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="overlay" id="emotionOverlay">
+        <button class="close-overlay" onclick="closeOverlay('emotion')">✕</button>
+        <div class="overlay-content">
+            <div class="animation-icon" id="emotionIcon">💔</div>
+            <div class="animation-text" id="emotionText">מוכנה למחוק רגש?</div>
+            <div class="progress-bar">
+                <div class="progress-fill emotion" id="emotionProgress"></div>
+            </div>
+            <textarea class="journal-textarea" id="emotionInput" placeholder="איזה רגש את רוצה למחוק?&#10;פחד? כעס? אשמה? בושה? געגוע?" style="margin-bottom: 20px;"></textarea>
+            <button class="install-btn" id="emotionBtn" onclick="runEmotionProcess()">💔 מחק רגש</button>
+            <div class="completion-message" id="emotionComplete">
+                <p style="font-size: 1.3em; margin-bottom: 10px; color: #D4A574;">✅ כל הכבוד!</p>
+                <p style="color: #666;">הרגש נמחק בהצלחה!</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="overlay" id="esteemOverlay">
+        <button class="close-overlay" onclick="closeOverlay('esteem')">✕</button>
+        <div class="overlay-content">
+            <div class="animation-icon" id="esteemIcon">⭐</div>
+            <div class="animation-text" id="esteemText">מתקינה הערכה עצמית...</div>
+            <div class="progress-bar">
+                <div class="progress-fill esteem" id="esteemProgress"></div>
+            </div>
+            <button class="install-btn" id="esteemBtn" onclick="runEsteemProcess()">⭐ התקן הערכה עצמית</button>
+            <div class="completion-message" id="esteemComplete">
+                <p style="font-size: 1.3em; margin-bottom: 10px; color: #D4A574;">✅ כל הכבוד!</p>
+                <p style="color: #666;">הערכה עצמית הותקנה בהצלחה!</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="overlay" id="confidenceOverlay">
+        <button class="close-overlay" onclick="closeOverlay('confidence')">✕</button>
+        <div class="overlay-content">
+            <div class="animation-icon" id="confidenceIcon">💪</div>
+            <div class="animation-text" id="confidenceText">מפעילה ביטחון עצמי...</div>
+            <div class="progress-bar">
+                <div class="progress-fill confidence" id="confidenceProgress"></div>
+            </div>
+            <button class="install-btn" id="confidenceBtn" onclick="runConfidenceProcess()">💪 הפעל ביטחון עצמי</button>
+            <div class="completion-message" id="confidenceComplete">
+                <p style="font-size: 1.3em; margin-bottom: 10px; color: #D4A574;">✅ כל הכבוד!</p>
+                <p style="color: #666;">ביטחון עצמי פועל בהצלחה!</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="overlay" id="imageOverlay">
+        <button class="close-overlay" onclick="closeOverlay('image')">✕</button>
+        <div class="overlay-content">
+            <div class="animation-icon" id="imageIcon">👑</div>
+            <div class="animation-text" id="imageText">משדרגת דימוי עצמי...</div>
+            <div class="progress-bar">
+                <div class="progress-fill image" id="imageProgress"></div>
+            </div>
+            <button class="install-btn" id="imageBtn" onclick="runImageProcess()">👑 שדרג דימוי עצמי</button>
+            <div class="completion-message" id="imageComplete">
+                <p style="font-size: 1.3em; margin-bottom: 10px; color: #D4A574;">✅ כל הכבוד!</p>
+                <p style="color: #666;">דימוי עצמי שודרג בהצלחה!</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="overlay" id="empowerOverlay">
+        <button class="close-overlay" onclick="closeOverlay('empower')">✕</button>
+        <div class="overlay-content">
+            <div class="animation-icon" id="empowerIcon">✨</div>
+            <div class="animation-text" id="empowerText">טוענת משפטי העצמה...</div>
+            <div class="progress-bar">
+                <div class="progress-fill empower" id="empowerProgress"></div>
+            </div>
+            <button class="install-btn" id="empowerBtn" onclick="runEmpowerProcess()">✨ טען משפטי העצמה</button>
+            <div class="completion-message" id="empowerComplete">
+                <p style="font-size: 1.3em; margin-bottom: 10px; color: #D4A574;">✅ כל הכבוד!</p>
+                <p style="color: #666;">משפטי העצמה נטענו בהצלחה!</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="overlay" id="relationshipOverlay">
+        <button class="close-overlay" onclick="closeOverlay('relationship')">✕</button>
+        <div class="overlay-content">
+            <div class="animation-icon" id="relationshipIcon">💕</div>
+            <div class="animation-text" id="relationshipText">מפעילה מגנוט זוגיות טובה...</div>
+            <div class="progress-bar">
+                <div class="progress-fill relationship" id="relationshipProgress"></div>
+            </div>
+            <button class="install-btn" id="relationshipBtn" onclick="runRelationshipProcess()">💕 הפעל מגנוט זוגיות</button>
+            <div class="completion-message" id="relationshipComplete">
+                <p style="font-size: 1.3em; margin-bottom: 10px; color: #D4A574;">✅ כל הכבוד!</p>
+                <p style="color: #666;">מגנטת זוגיות טובה בהצלחה!</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="overlay" id="divineOverlay">
+        <button class="close-overlay" onclick="closeOverlay('divine')">✕</button>
+        <div class="overlay-content">
+            <div class="animation-icon" id="divineIcon">👸</div>
+            <div class="animation-text" id="divineText">מפעילה אשה אלוקית...</div>
+            <div class="progress-bar">
+                <div class="progress-fill divine" id="divineProgress"></div>
+            </div>
+            <button class="install-btn" id="divineBtn" onclick="runDivineProcess()">👸 הפעל אשה אלוקית</button>
+            <div class="completion-message" id="divineComplete">
+                <p style="font-size: 1.3em; margin-bottom: 10px; color: #D4A574;">✅ כל הכבוד!</p>
+                <p style="color: #666;">את אשה אלוקית יפה וממגנטת!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global reset function - must be at start of script
+        window.resetAll = function() {
+            if (confirm('למחוק את כל הנתונים ולהתחיל מחדש?')) {
+                localStorage.removeItem('brainRewireData');
+                location.reload();
+            }
+        };
+        
+        let appData = {
+            memoryCount: 0,
+            emotionCount: 0,
+            esteemCount: 0,
+            confidenceCount: 0,
+            imageCount: 0,
+            empowerCount: 0,
+            relationshipCount: 0,
+            divineCount: 0,
+            journalEntries: [],
+            releasedMemories: [],
+            releasedEmotions: []
+        };
+        
+        function loadData() {
+            const saved = localStorage.getItem('brainRewireData');
+            if (saved) {
+                appData = JSON.parse(saved);
+                renderEntries();
+            }
+        }
+        
+        function saveData() {
+            localStorage.setItem('brainRewireData', JSON.stringify(appData));
+        }
+        
+        function runDivineProcess() {
+            const btn = document.getElementById('divineBtn');
+            const progress = document.getElementById('divineProgress');
+            const text = document.getElementById('divineText');
+            const icon = document.getElementById('divineIcon');
+            btn.disabled = true;
+            btn.textContent = '⏳ בתהליך...';
+            
+            const stages = [
+                { percent: 10, text: '✨ מתחברת לאור האלוקי שבך...', icon: '✨' },
+                { percent: 20, text: '👸 "אני אשה אלוקית"...', icon: '👸' },
+                { percent: 30, text: '🌹 "אני יפה בפנים ובחוץ"...', icon: '🌹' },
+                { percent: 40, text: '💎 "אני קורנת אור ויופי"...', icon: '💎' },
+                { percent: 50, text: '🧲 "אני ממגנטת גברים איכותיים"...', icon: '🧲' },
+                { percent: 60, text: '🙏 "אני מושכת גברים יראי שמיים"...', icon: '🙏' },
+                { percent: 70, text: '💜 "אני ראויה לבן זוג צדיק"...', icon: '💜' },
+                { percent: 80, text: '👑 "אני בת מלך"...', icon: '👑' },
+                { percent: 90, text: '🌟 מטמיעה את הזוהר האלוקי...', icon: '🌟' },
+                { percent: 100, text: '✅ את אשה אלוקית יפה וממגנטת!', icon: '👸' }
+            ];
+            
+            let stage = 0;
+            const interval = setInterval(() => {
+                if (stage < stages.length) {
+                    progress.style.width = stages[stage].percent + '%';
+                    text.textContent = stages[stage].text;
+                    icon.textContent = stages[stage].icon;
+                    stage++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('divineComplete').classList.add('show');
+                    appData.divineCount++;
+                    saveData();
+                    btn.disabled = false;
+                    btn.textContent = '👸 הפעל אשה אלוקית';
+                }
+            }, 4000);
+        }
+        
+        const affirmations = [
+            "את מלכה.",
+            "את מהממת.",
+            "את כבר מושלמת כמו שאת.",
+            "את כבר אהובה.",
+            "תראי איך הצלחת להתמודד עם הכל לבד. יש בך את כל היכולות. יש לך עוצמה אמיתית.",
+            "את חזקה יותר ממה שאת חושבת.",
+            "את ראויה לאהבה אמיתית, לכבוד, ולחיים טובים.",
+            "את שלמה בדיוק כמו שאת.",
+            "כל יום את בוחרת בעצמך מחדש.",
+            "את מסוגלת לעמוד בכל דבר.",
+            "יש בך אור שאף אחד לא יכול לכבות.",
+            "את בוחרת מאהבה לעצמך.",
+            "כל צעד קטן שאת עושה הוא ניצחון."
+        ];
+        
+        let currentAffirmation = 0;
+        
+        function cycleAffirmation() {
+            currentAffirmation = (currentAffirmation + 1) % affirmations.length;
+            document.getElementById('dailyAffirmation').textContent = '"' + affirmations[currentAffirmation] + '"';
+        }
+        
+        function startProcess(type) {
+            document.getElementById(type + 'Overlay').classList.add('active');
+            document.getElementById(type + 'Progress').style.width = '0%';
+            document.getElementById(type + 'Complete').classList.remove('show');
+            document.getElementById(type + 'Btn').disabled = false;
+        }
+        
+        function closeOverlay(type) {
+            document.getElementById(type + 'Overlay').classList.remove('active');
+        }
+        
+        function runMemoryProcess() {
+            const input = document.getElementById('memoryInput').value.trim();
+            if (!input) { alert('כתבי את הזיכרון שאת רוצה למחוק'); return; }
+            
+            const btn = document.getElementById('memoryBtn');
+            const progress = document.getElementById('memoryProgress');
+            const text = document.getElementById('memoryText');
+            const icon = document.getElementById('memoryIcon');
+            btn.disabled = true;
+            btn.textContent = '⏳ בתהליך...';
+            
+            const stages = [
+                { percent: 10, text: '🔍 מזהה את הזיכרון...', icon: '🔍' },
+                { percent: 20, text: '🎯 מתמקדת בזיכרון...', icon: '🎯' },
+                { percent: 30, text: '🧹 מתחילה למחוק...', icon: '🧹' },
+                { percent: 40, text: '💨 מסירה שכבה ראשונה...', icon: '💨' },
+                { percent: 50, text: '🌊 מנקה את הרגש...', icon: '🌊' },
+                { percent: 60, text: '✨ מסירה את הכאב...', icon: '✨' },
+                { percent: 70, text: '🕊️ משחררת...', icon: '🕊️' },
+                { percent: 80, text: '🌸 מפנה מקום לחדש...', icon: '🌸' },
+                { percent: 90, text: '💜 מסיימת את התהליך...', icon: '💜' },
+                { percent: 100, text: '✅ הזיכרון נמחק!', icon: '🦋' }
+            ];
+            
+            let stage = 0;
+            const interval = setInterval(() => {
+                if (stage < stages.length) {
+                    progress.style.width = stages[stage].percent + '%';
+                    text.textContent = stages[stage].text;
+                    icon.textContent = stages[stage].icon;
+                    stage++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('memoryComplete').classList.add('show');
+                    appData.memoryCount++;
+                    appData.releasedMemories.push({ date: new Date().toLocaleString('he-IL'), content: input });
+                    saveData();
+                    document.getElementById('memoryInput').value = '';
+                    btn.disabled = false;
+                    btn.textContent = '🗑️ מחק זיכרון';
+                }
+            }, 4000);
+        }
+        
+        function runEmotionProcess() {
+            const input = document.getElementById('emotionInput').value.trim();
+            if (!input) { alert('כתבי את הרגש שאת רוצה למחוק'); return; }
+            
+            const btn = document.getElementById('emotionBtn');
+            const progress = document.getElementById('emotionProgress');
+            const text = document.getElementById('emotionText');
+            const icon = document.getElementById('emotionIcon');
+            btn.disabled = true;
+            btn.textContent = '⏳ בתהליך...';
+            
+            const stages = [
+                { percent: 10, text: '❤️ מזהה את הרגש...', icon: '❤️' },
+                { percent: 20, text: '🫂 מקבלת אותו...', icon: '🫂' },
+                { percent: 30, text: '🌊 מתחילה לשחרר...', icon: '🌊' },
+                { percent: 40, text: '💨 מוחקת שכבה ראשונה...', icon: '💨' },
+                { percent: 50, text: '🧹 מנקה את השורשים...', icon: '🧹' },
+                { percent: 60, text: '✨ מסירה את הכובד...', icon: '✨' },
+                { percent: 70, text: '🕊️ משחררת לחופש...', icon: '🕊️' },
+                { percent: 80, text: '🌸 מפנה מקום לרגשות חדשים...', icon: '🌸' },
+                { percent: 90, text: '💜 מסיימת את התהליך...', icon: '💜' },
+                { percent: 100, text: '✅ הרגש נמחק!', icon: '☀️' }
+            ];
+            
+            let stage = 0;
+            const interval = setInterval(() => {
+                if (stage < stages.length) {
+                    progress.style.width = stages[stage].percent + '%';
+                    text.textContent = stages[stage].text;
+                    icon.textContent = stages[stage].icon;
+                    stage++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('emotionComplete').classList.add('show');
+                    appData.emotionCount++;
+                    appData.releasedEmotions.push({ date: new Date().toLocaleString('he-IL'), content: input });
+                    saveData();
+                    document.getElementById('emotionInput').value = '';
+                    btn.disabled = false;
+                    btn.textContent = '💨 מחק רגש';
+                }
+            }, 4000);
+        }
+        
+        function runEsteemProcess() {
+            const btn = document.getElementById('esteemBtn');
+            const progress = document.getElementById('esteemProgress');
+            const text = document.getElementById('esteemText');
+            const icon = document.getElementById('esteemIcon');
+            btn.disabled = true;
+            btn.textContent = '⏳ בתהליך...';
+            
+            const stages = [
+                { percent: 10, text: '📦 פותחת את החבילה...', icon: '📦' },
+                { percent: 20, text: '🔍 סורקת אמונות ישנות...', icon: '🔍' },
+                { percent: 30, text: '🗑️ מוחקת "אני לא מספיקה"...', icon: '🗑️' },
+                { percent: 40, text: '🗑️ מוחקת "אני לא ראויה"...', icon: '🗑️' },
+                { percent: 50, text: '💿 מתקינה: "אני ראויה"...', icon: '💿' },
+                { percent: 60, text: '💿 מתקינה: "אני מספיקה"...', icon: '💿' },
+                { percent: 70, text: '💿 מתקינה: "יש לי ערך"...', icon: '💿' },
+                { percent: 80, text: '✨ מחברת את החלקים...', icon: '✨' },
+                { percent: 90, text: '🌟 מפעילה את התוכנה החדשה...', icon: '🌟' },
+                { percent: 100, text: '✅ ההתקנה הושלמה!', icon: '⭐' }
+            ];
+            
+            let stage = 0;
+            const interval = setInterval(() => {
+                if (stage < stages.length) {
+                    progress.style.width = stages[stage].percent + '%';
+                    text.textContent = stages[stage].text;
+                    icon.textContent = stages[stage].icon;
+                    stage++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('esteemComplete').classList.add('show');
+                    appData.esteemCount++;
+                    saveData();
+                    btn.disabled = false;
+                    btn.textContent = '💿 התקן ערך עצמי';
+                }
+            }, 4000);
+        }
+        
+        function runConfidenceProcess() {
+            const btn = document.getElementById('confidenceBtn');
+            const progress = document.getElementById('confidenceProgress');
+            const text = document.getElementById('confidenceText');
+            const icon = document.getElementById('confidenceIcon');
+            btn.disabled = true;
+            btn.textContent = '⏳ בתהליך...';
+            
+            const stages = [
+                { percent: 10, text: '🔋 מאתחלת את המנוע...', icon: '🔋' },
+                { percent: 20, text: '🔍 מזהה חסמים ישנים...', icon: '🔍' },
+                { percent: 30, text: '🗑️ מסירה פחדים...', icon: '🗑️' },
+                { percent: 40, text: '🗑️ מסירה ספקות...', icon: '🗑️' },
+                { percent: 50, text: '⚡ מפעילה: "אני סומכת על עצמי"...', icon: '⚡' },
+                { percent: 60, text: '⚡ מפעילה: "אני יודעת מה טוב לי"...', icon: '⚡' },
+                { percent: 70, text: '⚡ מפעילה: "אני מסוגלת"...', icon: '⚡' },
+                { percent: 80, text: '🔥 מגבירה עוצמה...', icon: '🔥' },
+                { percent: 90, text: '💪 מחברת לכוח הפנימי...', icon: '💪' },
+                { percent: 100, text: '✅ ביטחון עצמי פועל!', icon: '💪' }
+            ];
+            
+            let stage = 0;
+            const interval = setInterval(() => {
+                if (stage < stages.length) {
+                    progress.style.width = stages[stage].percent + '%';
+                    text.textContent = stages[stage].text;
+                    icon.textContent = stages[stage].icon;
+                    stage++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('confidenceComplete').classList.add('show');
+                    appData.confidenceCount++;
+                    saveData();
+                    btn.disabled = false;
+                    btn.textContent = '⚡ הפעל ביטחון';
+                }
+            }, 4000);
+        }
+        
+        function runImageProcess() {
+            const btn = document.getElementById('imageBtn');
+            const progress = document.getElementById('imageProgress');
+            const text = document.getElementById('imageText');
+            const icon = document.getElementById('imageIcon');
+            btn.disabled = true;
+            btn.textContent = '⏳ בתהליך...';
+            
+            const stages = [
+                { percent: 10, text: '🖼️ סורקת תמונה ישנה...', icon: '🖼️' },
+                { percent: 20, text: '🔍 מזהה עיוותים...', icon: '🔍' },
+                { percent: 30, text: '🗑️ מוחקת: "אני פגומה"...', icon: '🗑️' },
+                { percent: 40, text: '🗑️ מוחקת: "אני לא יפה"...', icon: '🗑️' },
+                { percent: 50, text: '✨ מתקינה: "אני שלמה"...', icon: '✨' },
+                { percent: 60, text: '✨ מתקינה: "אני יפה"...', icon: '✨' },
+                { percent: 70, text: '👑 מתקינה: "אני ראויה למיטב"...', icon: '👑' },
+                { percent: 80, text: '🌟 מחדדת את התמונה...', icon: '🌟' },
+                { percent: 90, text: '💜 מסיימת שדרוג...', icon: '💜' },
+                { percent: 100, text: '✅ דימוי עצמי שודרג!', icon: '👸' }
+            ];
+            
+            let stage = 0;
+            const interval = setInterval(() => {
+                if (stage < stages.length) {
+                    progress.style.width = stages[stage].percent + '%';
+                    text.textContent = stages[stage].text;
+                    icon.textContent = stages[stage].icon;
+                    stage++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('imageComplete').classList.add('show');
+                    appData.imageCount++;
+                    saveData();
+                    btn.disabled = false;
+                    btn.textContent = '🖼️ שדרג דימוי';
+                }
+            }, 4000);
+        }
+        
+        function runEmpowerProcess() {
+            const btn = document.getElementById('empowerBtn');
+            const progress = document.getElementById('empowerProgress');
+            const text = document.getElementById('empowerText');
+            const icon = document.getElementById('empowerIcon');
+            btn.disabled = true;
+            btn.textContent = '⏳ בתהליך...';
+            
+            const stages = [
+                { percent: 10, text: '✨ מתחברת לכוח הפנימי...', icon: '✨' },
+                { percent: 20, text: '👑 "את מלכה"...', icon: '👑' },
+                { percent: 30, text: '💎 "את מהממת"...', icon: '💎' },
+                { percent: 40, text: '🌸 "את כבר מושלמת כמו שאת"...', icon: '🌸' },
+                { percent: 50, text: '💜 "את כבר אהובה"...', icon: '💜' },
+                { percent: 60, text: '💫 "יש בך את כל היכולות"...', icon: '💫' },
+                { percent: 70, text: '⚡ "יש לך עוצמה אמיתית"...', icon: '⚡' },
+                { percent: 80, text: '🌟 "את הצלחת להתמודד עם הכל לבד"...', icon: '🌟' },
+                { percent: 90, text: '🔥 מטמיעה את המשפטים...', icon: '🔥' },
+                { percent: 100, text: '✅ משפטי העצמה נטענו!', icon: '✨' }
+            ];
+            
+            let stage = 0;
+            const interval = setInterval(() => {
+                if (stage < stages.length) {
+                    progress.style.width = stages[stage].percent + '%';
+                    text.textContent = stages[stage].text;
+                    icon.textContent = stages[stage].icon;
+                    stage++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('empowerComplete').classList.add('show');
+                    appData.empowerCount++;
+                    saveData();
+                    btn.disabled = false;
+                    btn.textContent = '✨ משפטי העצמה';
+                }
+            }, 4000);
+        }
+        
+        function runRelationshipProcess() {
+            const btn = document.getElementById('relationshipBtn');
+            const progress = document.getElementById('relationshipProgress');
+            const text = document.getElementById('relationshipText');
+            const icon = document.getElementById('relationshipIcon');
+            btn.disabled = true;
+            btn.textContent = '⏳ בתהליך...';
+            
+            const stages = [
+                { percent: 10, text: '💕 מפעילה את המגנט...', icon: '💕' },
+                { percent: 20, text: '🌹 "אני ראויה לאהבה אמיתית"...', icon: '🌹' },
+                { percent: 30, text: '💎 "אני מושכת בן זוג שמכבד אותי"...', icon: '💎' },
+                { percent: 40, text: '🛡️ "אני בוחרת רק את המיטב"...', icon: '🛡️' },
+                { percent: 50, text: '👑 "אני מלכה ומקבלת יחס של מלכה"...', icon: '👑' },
+                { percent: 60, text: '💜 "אני אהובה ומוערכת"...', icon: '💜' },
+                { percent: 70, text: '🌟 "אני מושכת אהבה בריאה"...', icon: '🌟' },
+                { percent: 80, text: '✨ "בן הזוג שלי רואה את הערך שלי"...', icon: '✨' },
+                { percent: 90, text: '🌸 מטמיעה את האמונות...', icon: '🌸' },
+                { percent: 100, text: '✅ מגנטת זוגיות טובה בהצלחה!', icon: '💕' }
+            ];
+            
+            let stage = 0;
+            const interval = setInterval(() => {
+                if (stage < stages.length) {
+                    progress.style.width = stages[stage].percent + '%';
+                    text.textContent = stages[stage].text;
+                    icon.textContent = stages[stage].icon;
+                    stage++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('relationshipComplete').classList.add('show');
+                    appData.relationshipCount++;
+                    saveData();
+                    btn.disabled = false;
+                    btn.textContent = '💕 הפעל מגנוט זוגיות';
+                }
+            }, 4000);
+        }
+        
+        function saveJournalEntry() {
+            const entry = document.getElementById('journalEntry').value.trim();
+            if (!entry) { alert('כתבי משהו לפני שמירה'); return; }
+            
+            appData.journalEntries.unshift({
+                id: Date.now(),
+                date: new Date().toLocaleString('he-IL'),
+                content: entry
+            });
+            
+            saveData();
+            renderEntries();
+            document.getElementById('journalEntry').value = '';
+            alert('✅ ההוכחה לעוצמה שלך נשמרה!');
+        }
+        
+        function renderEntries() {
+            const list = document.getElementById('entriesList');
+            list.innerHTML = appData.journalEntries.map((entry, index) => `
+                <div class="entry-item">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <div class="entry-date">${entry.date}</div>
+                            <div class="entry-content">${entry.content}</div>
+                        </div>
+                        <button onclick="deleteEntry(${index})" style="background: #FFB6C1; border: none; color: white; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 14px; margin-right: 10px;">✕</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function deleteEntry(index) {
+            if (confirm('למחוק את ההוכחה הזו?')) {
+                appData.journalEntries.splice(index, 1);
+                saveData();
+                renderEntries();
+            }
+        }
+        
+        loadData();
+    </script>
+</body>
+</html>
